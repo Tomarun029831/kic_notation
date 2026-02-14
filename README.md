@@ -1,5 +1,5 @@
-
 the cmd in nushell which generates rules for building this project and builds the project.  
+
 ```{nushell}
 cmake -B build -G Ninja; cmake --build build\
 ```
