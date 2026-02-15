@@ -1,6 +1,7 @@
 #include "kic_parser/flyweight_kic_parser.h"
 #include "kic_parser/kic_parser_specifications.h"
 #include <assert.h>
+#include <stdio.h>
 
 inline static void kic_version_test() {
   const char *const kic_correct_version = "KIC:" KIC_VERSION ";/";
@@ -18,5 +19,6 @@ inline static void kic_syntax_test() {}
 int main(void) {
   kic_version_test();
   kic_syntax_test();
+  puts("flyweight_kic_parser_test passed");
   return 0;
 }
