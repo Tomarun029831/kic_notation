@@ -3,7 +3,7 @@
 #include <assert.h>
 
 inline static void kic_version_test() {
-  const char *const kic_correct_version = "KIC:" KICVERSION ";/";
+  const char *const kic_correct_version = "KIC:" KIC_VERSION ";/";
   const char *const kic_incorrect_version = "KIC:V0;/";
   const unsigned char expected_available =
       check_availability_of_kic(kic_correct_version);

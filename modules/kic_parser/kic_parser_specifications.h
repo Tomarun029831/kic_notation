@@ -1,2 +1,2 @@
 #pragma once
-#define KICVERSION "V3"
+#define KIC_VERSION "V3"
