@@ -5,7 +5,7 @@
 
 inline static void kic_version_test() {
   const char *const kic_correct_version[2] = {
-      "KIC:" KIC_VERSION ";/", "KIC:" KIC_VERSION ";1290;03000300;00900/"};
+      "KIC:" KIC_VERSION ";/", "KIC:" KIC_VERSION ";01290;03000300;00900/"};
   for (const char *const *head = &kic_correct_version[0];
        head != kic_correct_version + 2; head++) {
     const unsigned char expected_compatible = check_kic_compatibility(*head);
@@ -23,7 +23,7 @@ inline static void kic_version_test() {
 
 inline static void kic_syntax_test() {
   const char *kic_correct_syntax =
-      "KIC:" KIC_VERSION ";1290;03000300;009001223;21023/";
+      "KIC:" KIC_VERSION ";01437;01140334;008001200;20700090011001330;/";
   const unsigned char expected_correct = check_kic_syntax(kic_correct_syntax);
   assert(expected_correct == KIC_SYNTAX_CORRECT);
 
