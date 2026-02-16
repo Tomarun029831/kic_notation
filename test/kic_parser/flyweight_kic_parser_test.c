@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-inline static void kic_version_test() {
+static inline void kic_version_test() {
   const char *const kic_correct_version[2] = {
       "KIC:" KIC_VERSION ";/", "KIC:" KIC_VERSION ";01290;03000300;00900/"};
   for (const char *const *head = &kic_correct_version[0];
@@ -21,7 +21,7 @@ inline static void kic_version_test() {
   }
 }
 
-inline static void kic_syntax_test() {
+static inline void kic_syntax_test() {
   const char *kic_correct_syntax[2] = {
       "KIC:" KIC_VERSION ";01200;00010001;/",
       "KIC:" KIC_VERSION ";01437;01140334;008001200;20700090011001330;/"};
