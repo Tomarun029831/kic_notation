@@ -10,9 +10,64 @@ unsigned char check_kic_compatibility(const char *string) {
   for (;; string++) {
     if (*kic_header == ((char)'\0') && *string == KIC_SEPARATOR)
       return KIC_CONPATIBLE;
-    if (*string != *kic_header++)
+    else if (*string != *kic_header++)
       return KIC_INCONPATIBLE;
   }
 }
 
-unsigned char check_kic_syntax(const char *string) {}
+#define KIC_TIMESTAMP_LEN 5
+#define KIC_BOARD_LEN 8
+#define KIC_SCHEDULE_LEN 4
+
+unsigned char check_kic_syntax(const char *string) {
+  // check version
+  const char *kic_header = KIC_HEADER;
+  for (;; string++) {
+    if (*kic_header == ((char)'\0') && *string++ == KIC_SEPARATOR)
+      break;
+    else if (*string != *kic_header++)
+      return KIC_SYNTAX_ERROR;
+  }
+
+  // check timestamp
+  for (const char *end_of_timestamp = string + KIC_TIMESTAMP_LEN;; string++) {
+    if (*string == '\0')
+      return KIC_SYNTAX_ERROR;
+    else if (string == end_of_timestamp && *string++ == KIC_SEPARATOR)
+      break;
+    else if ('0' <= *string && *string <= '9')
+      continue;
+  }
+
+  // check board
+  for (const char *end_of_timestamp = string + KIC_BOARD_LEN;; string++) {
+    if (*string == '\0')
+      return KIC_SYNTAX_ERROR;
+    else if (string == end_of_timestamp && *string++ == KIC_SEPARATOR)
+      break;
+    else if ('0' <= *string && *string <= '9')
+      continue;
+  }
+
+  // check schedules
+  for (unsigned char flags_of_kic_separator = ((unsigned char)0),
+                     len_of_schedule = ((unsigned char)0);
+       ; string++) {
+    if (*string == KIC_TERMINATOR)
+      return KIC_SYNTAX_CORRECT;
+    else if (*string == '\0')
+      return KIC_SYNTAX_ERROR;
+    else if (*string == KIC_SEPARATOR) {
+      if ((len_of_schedule % KIC_SCHEDULE_LEN) != 1) // HACK:
+        return KIC_SYNTAX_ERROR;
+      flags_of_kic_separator = (flags_of_kic_separator << 1) + 1;
+      len_of_schedule = 0;
+      continue;
+    } else if ('0' <= *string && *string <= '9') {
+      ++len_of_schedule;
+      continue;
+    }
+  }
+
+  return KIC_SYNTAX_CORRECT;
+}
