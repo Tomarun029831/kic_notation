@@ -27,8 +27,7 @@ static inline void kic_syntax_test() {
       "KIC:" KIC_VERSION ";01437;01140334;008001200;20700090011001330;/"};
   for (const char *const *head = &kic_correct_syntax[0];
        head != kic_correct_syntax + 2; head++) {
-    const unsigned char expected_correct =
-        check_kic_syntax(*kic_correct_syntax);
+    const unsigned char expected_correct = check_kic_syntax(*head);
     assert(expected_correct == KIC_SYNTAX_CORRECT);
   }
 
