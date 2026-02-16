@@ -22,15 +22,26 @@ inline static void kic_version_test() {
 }
 
 inline static void kic_syntax_test() {
-  const char *kic_correct_syntax =
-      "KIC:" KIC_VERSION ";01437;01140334;008001200;20700090011001330;/";
-  const unsigned char expected_correct = check_kic_syntax(kic_correct_syntax);
-  assert(expected_correct == KIC_SYNTAX_CORRECT);
+  const char *kic_correct_syntax[2] = {
+      "KIC:" KIC_VERSION ";01200;00010001;/",
+      "KIC:" KIC_VERSION ";01437;01140334;008001200;20700090011001330;/"};
+  for (const char *const *head = &kic_correct_syntax[0];
+       head != kic_correct_syntax + 2; head++) {
+    const unsigned char expected_correct =
+        check_kic_syntax(*kic_correct_syntax);
+    assert(expected_correct == KIC_SYNTAX_CORRECT);
+  }
 
-  const char *kic_wrong_syntax =
-      "KIC:" KIC_VERSION ";129GNUIS0030NOTUNIX.223;21023/";
-  const unsigned char expected_wrong = check_kic_syntax(kic_wrong_syntax);
-  assert(expected_wrong == KIC_SYNTAX_ERROR);
+  const char *kic_wrong_syntax[4] = {
+      "KIC:" KIC_VERSION ";129GNUIS0030NOTUNIX.223;21023/",
+      "KIC:" KIC_VERSION ";9000;90009000;11200;/",
+      "KIC:" KIC_VERSION ";01200;0090;11200;/",
+      "KIC:" KIC_VERSION ";01200;00900090;1120012009;/"};
+  for (const char *const *head = &kic_wrong_syntax[0];
+       head != kic_wrong_syntax + 4; head++) {
+    const unsigned char expected_wrong = check_kic_syntax(*head);
+    assert(expected_wrong == KIC_SYNTAX_ERROR);
+  }
 }
 
 int main(void) {
