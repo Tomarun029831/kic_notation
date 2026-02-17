@@ -5,7 +5,7 @@
 #define KIC_SEPARATOR ';'
 #define KIC_TERMINATOR '/'
 
-unsigned char check_kic_compatibility(const char *string) {
+const unsigned char check_kic_compatibility(const char *string) {
   const char *kic_header = KIC_HEADER;
   for (;; string++, kic_header++) {
     if (*kic_header == ((char)'\0') && *string == KIC_SEPARATOR)
@@ -21,7 +21,7 @@ unsigned char check_kic_compatibility(const char *string) {
 #define MAX_KIC_SCHEDULE_AMOUNT ((unsigned char)0x7F)
 #define IS_NOT_DIGIT_CHAR(char) (!('0' <= char &&char <= '9'))
 
-unsigned char check_kic_syntax(const char *string) {
+const unsigned char check_kic_syntax(const char *string) {
   // check version
   const char *kic_header = KIC_HEADER;
   for (;; string++, kic_header++) {

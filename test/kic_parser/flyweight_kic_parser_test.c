@@ -3,22 +3,26 @@
 #include <assert.h>
 #include <stdio.h>
 
+static void kic_test_iteration_helper(const char *const *array_to_pass_test,
+                                      const int len_of_array,
+                                      const unsigned char (*func)(const char *),
+                                      const unsigned char expected_result) {
+  for (const char *const *head = &array_to_pass_test[0];
+       head != array_to_pass_test + len_of_array; head++) {
+    const unsigned char result = func(*head);
+    assert(result == expected_result);
+  }
+}
+
 static inline void kic_version_test() {
   const char *const kic_correct_version[2] = {
       "KIC:" KIC_VERSION ";/", "KIC:" KIC_VERSION ";01290;03000300;00900/"};
-  for (const char *const *head = &kic_correct_version[0];
-       head != kic_correct_version + 2; head++) {
-    const unsigned char expected_compatible = check_kic_compatibility(*head);
-    assert(expected_compatible == KIC_CONPATIBLE);
-  }
-
+  kic_test_iteration_helper(kic_correct_version, 2, check_kic_compatibility,
+                            KIC_CONPATIBLE);
   const char *const kic_incorrect_version[4] = {"KIC:V0;/", "AIC:V0;/",
                                                 "KAC:V0;/", "KIA:V0;/"};
-  for (const char *const *head = &kic_incorrect_version[0];
-       head != kic_incorrect_version + 4; head++) {
-    const unsigned char expected_incompatible = check_kic_compatibility(*head);
-    assert(expected_incompatible == KIC_INCONPATIBLE);
-  }
+  kic_test_iteration_helper(kic_incorrect_version, 4, check_kic_compatibility,
+                            KIC_INCONPATIBLE);
 }
 
 static inline void kic_syntax_test() {
@@ -27,12 +31,8 @@ static inline void kic_syntax_test() {
       "KIC:" KIC_VERSION ";01437;01140334;008001200;20700090011001330;/",
       "KIC:" KIC_VERSION ";01437;01140334;008001200;10100;20700090011001330;"
       "390001200;41200;51200;61200;/"};
-  for (const char *const *head = &kic_correct_syntax[0];
-       head != kic_correct_syntax + 3; head++) {
-    const unsigned char expected_correct = check_kic_syntax(*head);
-    assert(expected_correct == KIC_SYNTAX_CORRECT);
-  }
-
+  kic_test_iteration_helper(kic_correct_syntax, 3, check_kic_syntax,
+                            KIC_SYNTAX_CORRECT);
   const char *kic_wrong_syntax[6] = {
       "KIC:" KIC_VERSION ";129GNUIS0030NOTUNIX.223;21023/",
       "KIC:" KIC_VERSION ";9000;90009000;11200;/",
@@ -42,11 +42,8 @@ static inline void kic_syntax_test() {
       "390001200;41200;51200;61200;712001200;/",
       "KIC:" KIC_VERSION ";01437;01140334;008001200;10100;20700090011001330;"
       "390001200;41200;51200;61200;712001200/"};
-  for (const char *const *head = &kic_wrong_syntax[0];
-       head != kic_wrong_syntax + 6; head++) {
-    const unsigned char expected_wrong = check_kic_syntax(*head);
-    assert(expected_wrong == KIC_SYNTAX_ERROR);
-  }
+  kic_test_iteration_helper(kic_wrong_syntax, 6, check_kic_syntax,
+                            KIC_SYNTAX_ERROR);
 }
 
 static inline void kic_get_timestamp_test() {}
