@@ -17,7 +17,9 @@ unsigned char check_kic_compatibility(const char *string) {
 
 #define KIC_TIMESTAMP_LEN 5
 #define KIC_BOARD_LEN 8
-#define KIC_SCHEDULE_LEN 4
+#define KIC_SCHEDULE_PAYLOAD_LEN 4
+#define MAX_KIC_SCHEDULE_AMOUNT ((unsigned char)0x7F)
+#define IS_NOT_DIGIT_CHAR(char) (!('0' <= char &&char <= '9'))
 
 unsigned char check_kic_syntax(const char *string) {
   // check version
@@ -32,43 +34,37 @@ unsigned char check_kic_syntax(const char *string) {
   // check timestamp
   for (const char *expected_end_of_timestamp = string + KIC_TIMESTAMP_LEN;;
        string++) {
-    if (*string == '\0')
-      return KIC_SYNTAX_ERROR;
-    else if (string == expected_end_of_timestamp && *string++ == KIC_SEPARATOR)
+    if (string == expected_end_of_timestamp && *string++ == KIC_SEPARATOR)
       break;
-    else if ('0' <= *string && *string <= '9')
-      continue;
+    else if (*string == '\0' || IS_NOT_DIGIT_CHAR(*string))
+      return KIC_SYNTAX_ERROR;
   }
 
   // check board
   for (const char *expected_end_of_boardsize = string + KIC_BOARD_LEN;;
        string++) {
-    if (*string == '\0')
-      return KIC_SYNTAX_ERROR;
-    else if (string == expected_end_of_boardsize && *string++ == KIC_SEPARATOR)
+    if (string == expected_end_of_boardsize && *string++ == KIC_SEPARATOR)
       break;
-    else if ('0' <= *string && *string <= '9')
-      continue;
+    else if (*string == '\0' || IS_NOT_DIGIT_CHAR(*string))
+      return KIC_SYNTAX_ERROR;
   }
 
   // check schedules
-  for (unsigned char flags_of_kic_separator = ((unsigned char)0),
+  for (unsigned char flags_to_count_separator = ((unsigned char)0),
                      len_of_schedule = ((unsigned char)0);
        ; string++) {
-    if (*string == KIC_TERMINATOR)
+    if (*string == KIC_TERMINATOR && len_of_schedule == 0)
       break;
-    else if (*string == '\0')
-      return KIC_SYNTAX_ERROR;
     else if (*string == KIC_SEPARATOR) {
-      if ((len_of_schedule % KIC_SCHEDULE_LEN) != 1) // HACK:
-        return KIC_SYNTAX_ERROR;
-      flags_of_kic_separator = (flags_of_kic_separator << 1) + 1;
+      flags_to_count_separator = (flags_to_count_separator << 1) + 1;
+      if ((len_of_schedule % KIC_SCHEDULE_PAYLOAD_LEN) != 1 ||
+          flags_to_count_separator > MAX_KIC_SCHEDULE_AMOUNT)
+        return KIC_SYNTAX_ERROR; // HACK:
       len_of_schedule = 0;
       continue;
-    } else if ('0' <= *string && *string <= '9') {
-      ++len_of_schedule;
-      continue;
-    }
+    } else if (*string == '\0' || IS_NOT_DIGIT_CHAR(*string))
+      return KIC_SYNTAX_ERROR;
+    ++len_of_schedule;
   }
   return KIC_SYNTAX_CORRECT;
 }
