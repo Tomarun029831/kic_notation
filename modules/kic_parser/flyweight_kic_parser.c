@@ -7,10 +7,10 @@
 
 unsigned char check_kic_compatibility(const char *string) {
   const char *kic_header = KIC_HEADER;
-  for (;; string++) {
+  for (;; string++, kic_header++) {
     if (*kic_header == ((char)'\0') && *string == KIC_SEPARATOR)
       return KIC_CONPATIBLE;
-    else if (*string != *kic_header++)
+    else if (*string != *kic_header)
       return KIC_INCONPATIBLE;
   }
 }
@@ -22,28 +22,30 @@ unsigned char check_kic_compatibility(const char *string) {
 unsigned char check_kic_syntax(const char *string) {
   // check version
   const char *kic_header = KIC_HEADER;
-  for (;; string++) {
+  for (;; string++, kic_header++) {
     if (*kic_header == ((char)'\0') && *string++ == KIC_SEPARATOR)
       break;
-    else if (*string != *kic_header++)
+    else if (*string != *kic_header)
       return KIC_SYNTAX_ERROR;
   }
 
   // check timestamp
-  for (const char *end_of_timestamp = string + KIC_TIMESTAMP_LEN;; string++) {
+  for (const char *expected_end_of_timestamp = string + KIC_TIMESTAMP_LEN;;
+       string++) {
     if (*string == '\0')
       return KIC_SYNTAX_ERROR;
-    else if (string == end_of_timestamp && *string++ == KIC_SEPARATOR)
+    else if (string == expected_end_of_timestamp && *string++ == KIC_SEPARATOR)
       break;
     else if ('0' <= *string && *string <= '9')
       continue;
   }
 
   // check board
-  for (const char *end_of_timestamp = string + KIC_BOARD_LEN;; string++) {
+  for (const char *expected_end_of_boardsize = string + KIC_BOARD_LEN;;
+       string++) {
     if (*string == '\0')
       return KIC_SYNTAX_ERROR;
-    else if (string == end_of_timestamp && *string++ == KIC_SEPARATOR)
+    else if (string == expected_end_of_boardsize && *string++ == KIC_SEPARATOR)
       break;
     else if ('0' <= *string && *string <= '9')
       continue;
@@ -54,7 +56,7 @@ unsigned char check_kic_syntax(const char *string) {
                      len_of_schedule = ((unsigned char)0);
        ; string++) {
     if (*string == KIC_TERMINATOR)
-      return KIC_SYNTAX_CORRECT;
+      break;
     else if (*string == '\0')
       return KIC_SYNTAX_ERROR;
     else if (*string == KIC_SEPARATOR) {
@@ -68,6 +70,5 @@ unsigned char check_kic_syntax(const char *string) {
       continue;
     }
   }
-
   return KIC_SYNTAX_CORRECT;
 }
