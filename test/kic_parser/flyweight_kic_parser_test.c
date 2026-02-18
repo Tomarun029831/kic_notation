@@ -46,8 +46,41 @@ static inline void kic_syntax_test() {
                             KIC_SYNTAX_ERROR);
 }
 
-static inline void kic_get_timestamp_test() {}
-static inline void kic_get_boardsize_test() {}
+static inline void kic_get_timestamp_test() {
+  const char *kic_correct_syntax[3] = {
+      "KIC:" KIC_VERSION ";01200;00010001;/",
+      "KIC:" KIC_VERSION ";11437;01140334;008001200;20700090011001330;/",
+      "KIC:" KIC_VERSION ";21437;01140334;008001200;10100;20700090011001330;"
+      "390001200;41200;51200;61200;/"};
+  const unsigned int expected_timestamps[3] = {
+      TIMESTAMP(0, 1200), TIMESTAMP(1, 1437), TIMESTAMP(2, 1437)};
+
+  for (const char *const *head = kic_correct_syntax;
+       head != kic_correct_syntax + 3; head++) {
+    unsigned int result = get_kic_timestamp(*head);
+    assert(result == expected_timestamps[(head - kic_correct_syntax)]);
+  }
+}
+
+static inline void kic_get_boardsize_test() {
+  const char *kic_correct_syntax[3] = {
+      "KIC:" KIC_VERSION ";01200;00010001;/",
+      "KIC:" KIC_VERSION ";11437;01140334;008001200;20700090011001330;/",
+      "KIC:" KIC_VERSION ";21437;01140334;008001200;10100;20700090011001330;"
+      "390001200;41200;51200;61200;/"};
+  const BoardSize expected_timestamps[3] = {
+      BOARDSIZE(1, 1), BOARDSIZE(114, 334), BOARDSIZE(114, 334)};
+
+  for (const char *const *head = kic_correct_syntax;
+       head != kic_correct_syntax + 3; head++) {
+    const BoardSize result = get_kic_boardsize(*head);
+    assert(result.height_cm ==
+               expected_timestamps[(head - kic_correct_syntax)].height_cm &&
+           result.width_cm ==
+               expected_timestamps[(head - kic_correct_syntax)].width_cm);
+  }
+}
+
 static inline void kic_get_schedules_test() {}
 static inline void kic_get_day_of_week_test() {}
 static inline void kic_get_time_in_schedule_test() {}
