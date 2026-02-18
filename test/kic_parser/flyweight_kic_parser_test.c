@@ -1,10 +1,11 @@
 #include "kic_parser/flyweight_kic_parser.h"
 #include "kic_parser/kic_parser_specifications.h"
 #include <assert.h>
+#include <stddef.h>
 #include <stdio.h>
 
 static void kic_boolean_test_iterator(const char *const *array_to_pass_test,
-                                      const int len_of_array,
+                                      const size_t len_of_array,
                                       const unsigned char (*func)(const char *),
                                       const unsigned char expected_result) {
   for (const char *const *head = &array_to_pass_test[0];
@@ -82,7 +83,7 @@ static inline void kic_get_boardsize_test() {
 }
 
 static inline void kic_get_schedules_test() {}
-static inline void kic_get_day_of_week_test() {}
+static inline void kic_get_day_of_week_in_schedule_test() {}
 static inline void kic_get_time_in_schedule_test() {}
 
 int main(void) {
@@ -93,7 +94,7 @@ int main(void) {
   kic_get_timestamp_test();
   kic_get_boardsize_test();
   kic_get_schedules_test();
-  kic_get_day_of_week_test();
+  kic_get_day_of_week_in_schedule_test();
   kic_get_time_in_schedule_test();
 
   puts("flyweight_kic_parser_test passed");
