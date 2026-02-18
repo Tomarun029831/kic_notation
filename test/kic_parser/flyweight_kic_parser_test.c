@@ -6,16 +6,26 @@
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 
-static void kic_boolean_test_iterator(const char *const *array_to_pass_test,
-                                      const size_t len_of_array,
-                                      const unsigned char (*func)(const char *),
-                                      const unsigned char expected_result) {
-  for (const char *const *head = &array_to_pass_test[0];
-       head != array_to_pass_test + len_of_array; head++) {
-    const unsigned char result = func(*head);
-    assert(result == expected_result);
+static void
+kic_boolean_test_iterator_impl(const char *const *array, const size_t len,
+                               const unsigned char (*func)(const char *),
+                               const unsigned char expected, const char *file,
+                               const int line) {
+  for (size_t i = 0; i < len; i++) {
+    const unsigned char result = func(array[i]);
+    if (result == expected)
+      continue;
+    fprintf(stderr, "\n[ASSERTION FAILED]\n");
+    fprintf(stderr, "  File    : %s\n", file);
+    fprintf(stderr, "  Line    : %d\n", line);
+    fprintf(stderr, "  Index   : %zu\n", i);
+    fprintf(stderr, "  Input   : \"%s\"\n", array[i]);
+    fprintf(stderr, "  Result  : %u (expected %u)\n\n", result, expected);
   }
 }
+#define kic_boolean_test_iterator(arr, len, func, exp)                         \
+  kic_boolean_test_iterator_impl((arr), (len), (func), (exp), __FILE__,        \
+                                 __LINE__)
 
 static inline void kic_version_test() {
   const char *const kic_correct_version[] = {
