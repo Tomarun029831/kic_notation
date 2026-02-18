@@ -18,7 +18,7 @@ const unsigned char check_kic_compatibility(const char *string) {
 #define KIC_TIMESTAMP_LEN 5
 #define KIC_BOARD_LEN 8
 #define KIC_SCHEDULE_PAYLOAD_LEN 4
-#define MAX_KIC_SCHEDULE_AMOUNT ((unsigned char)0x7F)
+#define MAX_KIC_SCHEDULE_AMOUNT ((unsigned char)7)
 #define IS_NOT_DIGIT_CHAR(char) (!('0' <= char &&char <= '9'))
 
 const unsigned char check_kic_syntax(const char *string) {
@@ -56,7 +56,7 @@ const unsigned char check_kic_syntax(const char *string) {
     if (*string == KIC_TERMINATOR && len_of_schedule == 0)
       break;
     else if (*string == KIC_SEPARATOR) {
-      flags_to_count_separator = (flags_to_count_separator << 1) + 1;
+      ++flags_to_count_separator;
       if ((len_of_schedule % KIC_SCHEDULE_PAYLOAD_LEN) != 1 ||
           flags_to_count_separator > MAX_KIC_SCHEDULE_AMOUNT)
         return KIC_SYNTAX_ERROR; // HACK:

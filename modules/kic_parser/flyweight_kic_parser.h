@@ -32,7 +32,7 @@ const char *find_kic_schedule(const char *string);
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),
 // if you cannot ensure that the argument of this function follows kic-format
-const char *find_kic_day_of_week(const char *string);
+const char *find_kic_day_of_week_in_schedule(const char *string);
 
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),
