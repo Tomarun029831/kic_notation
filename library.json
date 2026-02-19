@@ -5,15 +5,22 @@
     "keywords": "kic, parser, esp32, embedded",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Tomarun029831/kic_notation.git"
+        "url": "https://github.com/Tomarun028831/kic_notation.git"
     },
     "authors": [
         {
-            "name": "Tomarun029831",
+            "name": "Tomarun028831",
             "maintainer": true
         }
     ],
     "license": "MIT",
     "frameworks": "*",
-    "platforms": "espressif32"
+    "platforms": "espressif32",
+    "build": {
+        "flags": [
+            "-I modules/kic_parser/include",
+            "-I modules/kic_timestamp/include"
+        ],
+        "srcDir": "modules"
+    }
 }
