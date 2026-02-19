@@ -8,3 +8,14 @@ target_sources(kic_parser
         FILES
             kic_parser/flyweight_kic_parser.h
 )
+
+add_library(timestamp STATIC)
+target_sources(timestamp
+    PRIVATE
+        timestamp/timestamp.c
+    PUBLIC
+        FILE_SET HEADERS
+        BASE_DIRS "."
+        FILES
+            timestamp/timestamp.h
+)
