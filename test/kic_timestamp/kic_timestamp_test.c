@@ -3,10 +3,6 @@
 
 #ifdef ARDUINO
 #include <Arduino.h>
-extern "C" {
-void setup();
-void loop();
-}
 #define TEST_MAIN void setup()
 #define TEST_EXIT()                                                            \
   do {                                                                         \
