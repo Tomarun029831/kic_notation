@@ -9,8 +9,8 @@ target_sources(kic_parser
             kic_parser/flyweight_kic_parser.h
 )
 
-add_library(timestamp STATIC)
-target_sources(timestamp
+add_library(kic_timestamp STATIC)
+target_sources(kic_timestamp
     PRIVATE
         kic_timestamp/kic_timestamp.c
     PUBLIC
