@@ -1,4 +1,11 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "kic_timestamp/kic_timestamp.h"
+#ifdef __cplusplus
+}
+#endif
+
 #include <assert.h>
 
 #ifdef ARDUINO
