@@ -12,10 +12,10 @@ target_sources(kic_parser
 add_library(timestamp STATIC)
 target_sources(timestamp
     PRIVATE
-        timestamp/timestamp.c
+        kic_timestamp/kic_timestamp.c
     PUBLIC
         FILE_SET HEADERS
         BASE_DIRS "."
         FILES
-            timestamp/timestamp.h
+            kic_timestamp/kic_timestamp.h
 )

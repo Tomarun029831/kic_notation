@@ -70,7 +70,7 @@ const unsigned char check_kic_syntax(const char *string) {
   return KIC_SYNTAX_CORRECT;
 }
 
-const Timestamp get_kic_timestamp(const char *string) {
+const KIC_Timestamp get_kic_timestamp(const char *string) {
 #define OFFSET_TO_KIC_TIMESTAMP (sizeof(KIC_HEADER))
   const unsigned int raw_hour =
       (string[OFFSET_TO_KIC_TIMESTAMP + 1] - '0') * 1000 +
@@ -78,7 +78,7 @@ const Timestamp get_kic_timestamp(const char *string) {
   const unsigned char is_PM = (raw_hour >= HALF_DAY_OFFSET); // 1bit
   const unsigned int hour = is_PM ? (raw_hour - HALF_DAY_OFFSET) : raw_hour;
 
-  const Timestamp time = // PERF:
+  const KIC_Timestamp time = // PERF:
       TIMESTAMP_RAW((string[OFFSET_TO_KIC_TIMESTAMP + 0] - '0'),
                     (hour + (string[OFFSET_TO_KIC_TIMESTAMP + 3] - '0') * 10 +
                      (string[OFFSET_TO_KIC_TIMESTAMP + 4] - '0')),
@@ -118,8 +118,8 @@ const char *find_kic_schedule(const char *string, const char day) {
   return KIC_SCHEDULE_NOT_FOUND;
 }
 
-const Timestamp get_kic_time_in_schedule(const char *ptr_to_schedule,
-                                         const size_t idx) {
+const KIC_Timestamp get_kic_time_in_schedule(const char *ptr_to_schedule,
+                                             const size_t idx) {
   const char *ptr_to_first_time = ptr_to_schedule + 1;
   for (size_t tidx = 0; tidx <= idx; tidx++) {
     if (*(ptr_to_first_time + tidx * KIC_SCHEDULE_PAYLOAD_LEN) == KIC_SEPARATOR)
