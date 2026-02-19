@@ -1,4 +1,6 @@
 #pragma once
+#include <stdint.h>
+
 #define KIC_CONPATIBLE ((unsigned char)0)
 #define KIC_INCONPATIBLE ((unsigned char)1)
 const unsigned char check_kic_compatibility(const char *string);
@@ -8,17 +10,26 @@ const unsigned char check_kic_compatibility(const char *string);
 // this function will call check_kic_compatibility() with the argument
 const unsigned char check_kic_syntax(const char *string);
 
-#define TIMESTAMP(day, time) ((unsigned int)(day * 10000 + time))
-typedef struct {
-  const unsigned int height_cm;
-  const unsigned int width_cm;
-} BoardSize;
-#define BOARDSIZE(h, w) ((BoardSize){(h), (w)})
+typedef union {
+  struct {
+    uint16_t time : 11; // 0〜1259
+    uint16_t day : 3;   // 0〜6
+    uint16_t unused : 2;
+  } field;
+  uint16_t raw;
+} Timestamp;
+#define TIMESTAMP(d, t)                                                        \
+  ((Timestamp){.field = {.time = (t), .day = (d), .unused = 0}})
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),
 // if you cannot ensure that the argument of this function follows kic-format
-const unsigned int get_kic_timestamp(const char *string);
+const Timestamp get_kic_timestamp(const char *string);
 
+typedef struct {
+  const uint16_t height_cm;
+  const uint16_t width_cm;
+} BoardSize;
+#define BOARDSIZE(h, w) ((BoardSize){(h), (w)})
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),
 // if you cannot ensure that the argument of this function follows kic-format

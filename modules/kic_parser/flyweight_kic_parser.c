@@ -69,21 +69,21 @@ const unsigned char check_kic_syntax(const char *string) {
   return KIC_SYNTAX_CORRECT;
 }
 
-const unsigned int get_kic_timestamp(const char *string) {
+const Timestamp get_kic_timestamp(const char *string) {
 #define OFFSET_TO_KIC_TIMESTAMP (sizeof(KIC_HEADER))
-  const unsigned int time =
-      (string[OFFSET_TO_KIC_TIMESTAMP + 0] - '0') * 10000 + // PERF:
-      (string[OFFSET_TO_KIC_TIMESTAMP + 1] - '0') * 1000 +
-      (string[OFFSET_TO_KIC_TIMESTAMP + 2] - '0') * 100 +
-      (string[OFFSET_TO_KIC_TIMESTAMP + 3] - '0') * 10 +
-      (string[OFFSET_TO_KIC_TIMESTAMP + 4] - '0');
+  const Timestamp time = // PERF:
+      TIMESTAMP((string[OFFSET_TO_KIC_TIMESTAMP + 0] - '0'),
+                ((string[OFFSET_TO_KIC_TIMESTAMP + 1] - '0') * 1000 +
+                 (string[OFFSET_TO_KIC_TIMESTAMP + 2] - '0') * 100 +
+                 (string[OFFSET_TO_KIC_TIMESTAMP + 3] - '0') * 10 +
+                 (string[OFFSET_TO_KIC_TIMESTAMP + 4] - '0')));
   return time;
 }
 
 BoardSize get_kic_boardsize(const char *string) {
 #define OFFSET_TO_KIC_BOARDSIZE (sizeof(KIC_HEADER ";DHHMM"))
-  const BoardSize size =
-      BOARDSIZE((string[OFFSET_TO_KIC_BOARDSIZE + 0] - '0') * 1000 + // PERF:
+  const BoardSize size = // PERF:
+      BOARDSIZE((string[OFFSET_TO_KIC_BOARDSIZE + 0] - '0') * 1000 +
                     (string[OFFSET_TO_KIC_BOARDSIZE + 1] - '0') * 100 +
                     (string[OFFSET_TO_KIC_BOARDSIZE + 2] - '0') * 10 +
                     (string[OFFSET_TO_KIC_BOARDSIZE + 3] - '0'),

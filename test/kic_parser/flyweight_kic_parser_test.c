@@ -67,14 +67,14 @@ static inline void kic_get_timestamp_test() {
       "KIC:" KIC_VERSION ";11437;01140334;008001200;20700090011001330;/",
       "KIC:" KIC_VERSION ";21437;01140334;008001200;10100;20700090011001330;"
       "390001200;41200;51200;61200;/"};
-  const unsigned int expected_timestamps[] = {
+  const Timestamp expected_timestamps[] = {
       TIMESTAMP(0, 1200), TIMESTAMP(1, 1437), TIMESTAMP(2, 1437)};
 
   for (const char *const *head = kic_correct_syntax;
        head != kic_correct_syntax + ARRAY_SIZE(kic_correct_syntax); head++) {
-    unsigned int result = get_kic_timestamp(*head);
+    Timestamp result = get_kic_timestamp(*head);
     ptrdiff_t idx = head - kic_correct_syntax;
-    assert(result == expected_timestamps[idx]);
+    assert(result.raw == expected_timestamps[idx].raw);
   }
 }
 
