@@ -117,6 +117,27 @@ static inline void kic_find_schedules_test() {
   }
 }
 
+static inline void kic_find_time_in_schedule_test() {
+  const char *kic_correct_syntax[] = {
+      "KIC:" KIC_VERSION ";01200;00010001;11154;/",
+      "KIC:" KIC_VERSION ";11437;01140334;008001200;20700090011001330;/",
+      "KIC:" KIC_VERSION ";21437;01140334;008001200;10100;20700090011001330;"
+      "390001200;41200;51200;61200;/"};
+  const Timestamp expected_timestamps[] = {
+      TIMESTAMP(1, 1154), KIC_TIME_NOT_FOUND, TIMESTAMP(2, 1100)};
+  const uint32_t args_to_find_schedule[] = {1, 0, 2};
+  const size_t args_to_get_time[] = {0, 3, 2};
+
+  for (const char *const *head = kic_correct_syntax;
+       head != kic_correct_syntax + ARRAY_SIZE(kic_correct_syntax); head++) {
+    ptrdiff_t idx = head - kic_correct_syntax;
+    const char *schedule = find_kic_schedule(*head, args_to_find_schedule[idx]);
+    const Timestamp result =
+        get_kic_time_in_schedule(schedule, args_to_get_time[idx]);
+    assert(expected_timestamps[idx].raw == result.raw);
+  }
+}
+
 int main(void) {
   kic_version_test();
   kic_syntax_test();
@@ -126,6 +147,7 @@ int main(void) {
   kic_get_timestamp_test();
   kic_get_boardsize_test();
   kic_find_schedules_test();
+  kic_find_time_in_schedule_test();
 
   puts("flyweight_kic_parser_test passed");
   return 0;
