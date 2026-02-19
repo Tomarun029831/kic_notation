@@ -41,5 +41,7 @@ jobs:
         - name: Build for ESP32
           run: |
             for file in test/kic_parser/*.c test/kic_timestamp/*.c; do
-              pio ci --board esp32dev --lib="." "$file"
+              pio ci --board esp32dev --lib="." \
+                --project-option="build_flags=-DARDUINO -I modules/kic_parser/include -I modules/kic_timestamp/include" \
+                "$file"
             done
