@@ -1,0 +1,19 @@
+{
+    "name": "kic_notation",
+    "version": "1.0.0",
+    "description": "A lightweight parser for KIC notation, optimized for embedded systems like ESP32.",
+    "keywords": "kic, parser, esp32, embedded",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Tomarun029831/kic_notation.git"
+    },
+    "authors": [
+        {
+            "name": "Tomarun029831",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "espressif32"
+}
