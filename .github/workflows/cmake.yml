@@ -29,17 +29,17 @@ jobs:
       run: ctest -C Release --output-on-failure
 
   esp32-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-      - name: Install PlatformIO
-        run: pip install -U platformio
-      - name: Build for ESP32
-              run: |
-                for file in test/kic_parser/*.c test/kic_timestamp/*.c; do
-                  pio ci --board esp32dev --lib="." "$file"
-                done
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.x'
+        - name: Install PlatformIO
+          run: pip install -U platformio
+        - name: Build for ESP32
+          run: |
+            for file in test/kic_parser/*.c test/kic_timestamp/*.c; do
+              pio ci --board esp32dev --lib="." "$file"
+            done
