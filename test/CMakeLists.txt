@@ -7,6 +7,6 @@ if(KIC_PARSER_TESTS)
 endif()
 
 if(TIMESTAMP_TESTS)
-    add_executable(timestamp_test timestamp/timestamp.c)
+    add_executable(timestamp_test timestamp/timestamp_test.c)
     target_link_libraries(timestamp_test PRIVATE timestamp)
 endif()
