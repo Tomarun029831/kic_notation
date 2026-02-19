@@ -71,12 +71,17 @@ const unsigned char check_kic_syntax(const char *string) {
 
 const Timestamp get_kic_timestamp(const char *string) {
 #define OFFSET_TO_KIC_TIMESTAMP (sizeof(KIC_HEADER))
+  const unsigned int raw_hour =
+      (string[OFFSET_TO_KIC_TIMESTAMP + 1] - '0') * 1000 +
+      (string[OFFSET_TO_KIC_TIMESTAMP + 2] - '0') * 100;
+  const unsigned char isPM = (raw_hour >= HALF_DAY_OFFSET); // 1bit
+  const unsigned int hour = isPM ? (raw_hour - HALF_DAY_OFFSET) : raw_hour;
+
   const Timestamp time = // PERF:
-      TIMESTAMP((string[OFFSET_TO_KIC_TIMESTAMP + 0] - '0'),
-                ((string[OFFSET_TO_KIC_TIMESTAMP + 1] - '0') * 1000 +
-                 (string[OFFSET_TO_KIC_TIMESTAMP + 2] - '0') * 100 +
-                 (string[OFFSET_TO_KIC_TIMESTAMP + 3] - '0') * 10 +
-                 (string[OFFSET_TO_KIC_TIMESTAMP + 4] - '0')));
+      TIMESTAMP_RAW((string[OFFSET_TO_KIC_TIMESTAMP + 0] - '0'),
+                    (hour + (string[OFFSET_TO_KIC_TIMESTAMP + 3] - '0') * 10 +
+                     (string[OFFSET_TO_KIC_TIMESTAMP + 4] - '0')),
+                    isPM);
   return time;
 }
 
