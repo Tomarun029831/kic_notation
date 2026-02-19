@@ -3,7 +3,17 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
+#ifdef ARDUINO
+#include <Arduino.h>
+#define TEST_MAIN void setup()
+#define TEST_EXIT()                                                            \
+  do {                                                                         \
+  } while (0)
+#else
 #include <stdio.h>
+#define TEST_MAIN int main(void)
+#define TEST_EXIT() return 0
+#endif
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 
@@ -16,12 +26,6 @@ kic_boolean_test_iterator_impl(const char *const *array, const size_t len,
     const unsigned char result = func(array[i]);
     if (result == expected)
       continue;
-    fprintf(stderr, "\n[ASSERTION FAILED]\n");
-    fprintf(stderr, "  File    : %s\n", file);
-    fprintf(stderr, "  Line    : %d\n", line);
-    fprintf(stderr, "  Index   : %zu\n", i);
-    fprintf(stderr, "  Input   : \"%s\"\n", array[i]);
-    fprintf(stderr, "  Result  : %u (expected %u)\n\n", result, expected);
   }
 }
 #define kic_boolean_test_iterator(arr, len, func, exp)                         \
@@ -138,17 +142,21 @@ static inline void kic_find_time_in_schedule_test() {
   }
 }
 
-int main(void) {
+TEST_MAIN {
   kic_version_test();
   kic_syntax_test();
-  // The following tests do not validate the syntax of character arrays.
-  // Please ensure you include tests that verify character arrays using correct
-  // KIC syntax.
   kic_get_timestamp_test();
   kic_get_boardsize_test();
   kic_find_schedules_test();
   kic_find_time_in_schedule_test();
 
+#ifndef ARDUINO
   puts("flyweight_kic_parser_test passed");
-  return 0;
+#endif
+
+  TEST_EXIT();
 }
+
+#ifdef ARDUINO
+void loop() {}
+#endif
