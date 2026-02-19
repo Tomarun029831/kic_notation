@@ -3,6 +3,10 @@
 
 #ifdef ARDUINO
 #include <Arduino.h>
+extern "C" {
+void setup();
+void loop();
+}
 #define TEST_MAIN void setup()
 #define TEST_EXIT()                                                            \
   do {                                                                         \
@@ -14,10 +18,6 @@
 #endif
 
 TEST_MAIN {
-#ifdef ARDUINO
-  Serial.begin(115200);
-#endif
-
   {
     KIC_Timestamp ts = TIMESTAMP(0, 1030);
     ts.segments.second = 59;
