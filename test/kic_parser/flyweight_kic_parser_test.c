@@ -2,6 +2,7 @@
 #include "kic_parser/kic_parser_specifications.h"
 #include <assert.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
@@ -97,7 +98,24 @@ static inline void kic_get_boardsize_test() {
   }
 }
 
-static inline void kic_find_schedules_test() {}
+static inline void kic_find_schedules_test() {
+  const char *kic_correct_syntax[] = {
+      "KIC:" KIC_VERSION ";01200;00010001;/",
+      "KIC:" KIC_VERSION ";11437;01140334;008001200;20700090011001330;/",
+      "KIC:" KIC_VERSION ";21437;01140334;008001200;10100;20700090011001330;"
+      "390001200;41200;51200;61200;/"};
+  const char *expected_ptr[] = {KIC_SCHEDULE_NOT_FOUND,
+                                &kic_correct_syntax[1][22],
+                                &kic_correct_syntax[2][38]};
+  const uint32_t args[] = {0, 0, 2};
+
+  for (const char *const *head = kic_correct_syntax;
+       head != kic_correct_syntax + ARRAY_SIZE(kic_correct_syntax); head++) {
+    ptrdiff_t idx = head - kic_correct_syntax;
+    const char *result = find_kic_schedule(*head, args[idx]);
+    assert(expected_ptr[idx] == result);
+  }
+}
 
 int main(void) {
   kic_version_test();
