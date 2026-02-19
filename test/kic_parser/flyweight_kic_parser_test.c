@@ -97,20 +97,17 @@ static inline void kic_get_boardsize_test() {
   }
 }
 
-static inline void kic_get_schedules_test() {}
-static inline void kic_get_day_of_week_in_schedule_test() {}
-static inline void kic_get_time_in_schedule_test() {}
+static inline void kic_find_schedules_test() {}
 
 int main(void) {
   kic_version_test();
   kic_syntax_test();
-  // below here, these tests do NOT check syntax of array of chars.
-  // So you must let the tests check array of chars which has correct kic syntax
+  // The following tests do not validate the syntax of character arrays.
+  // Please ensure you include tests that verify character arrays using correct
+  // KIC syntax.
   kic_get_timestamp_test();
   kic_get_boardsize_test();
-  kic_get_schedules_test();
-  kic_get_day_of_week_in_schedule_test();
-  kic_get_time_in_schedule_test();
+  kic_find_schedules_test();
 
   puts("flyweight_kic_parser_test passed");
   return 0;
