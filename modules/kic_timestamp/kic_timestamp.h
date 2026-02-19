@@ -31,3 +31,14 @@ static inline KIC_Timestamp TIMESTAMP(uint32_t d, uint32_t t) {
                                 .day = (d),                                    \
                                 .is_PM = (pm),                                 \
                                 .is_invalid = (v)}})
+
+static inline int32_t KIC_Timestamp_Compare(KIC_Timestamp ts1,
+                                            KIC_Timestamp ts2) {
+  return ts1.raw == ts2.raw; // HACK:
+}
+
+void KIC_Timestamp_AddMs(KIC_Timestamp *ts, uint32_t ms);
+void KIC_Timestamp_AddSec(KIC_Timestamp *ts, uint32_t sec);
+void KIC_Timestamp_AddMin(KIC_Timestamp *ts, uint32_t min);
+void KIC_Timestamp_AddHour(KIC_Timestamp *ts, uint32_t hour);
+void KIC_Timestamp_AddDay(KIC_Timestamp *ts, uint32_t day);
