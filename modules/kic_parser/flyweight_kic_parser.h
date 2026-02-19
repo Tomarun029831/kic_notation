@@ -15,11 +15,11 @@ typedef union {
     uint16_t time : 11; // 0〜1259
     uint16_t day : 3;   // 0〜6
     uint16_t unused : 2;
-  } field;
+  } segments;
   uint16_t raw;
 } Timestamp;
 #define TIMESTAMP(d, t)                                                        \
-  ((Timestamp){.field = {.time = (t), .day = (d), .unused = 0}})
+  ((Timestamp){.segments = {.time = (t), .day = (d), .unused = 0}})
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),
 // if you cannot ensure that the argument of this function follows kic-format
