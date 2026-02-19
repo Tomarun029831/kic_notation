@@ -42,6 +42,6 @@ jobs:
           run: |
             for file in test/kic_parser/*.c test/kic_timestamp/*.c; do
               pio ci --board esp32dev --lib="." \
-                --project-option="build_flags=-x c++ -I modules/kic_parser/include -I modules/kic_timestamp/include" \
-                "$file"
+                --project-option="build_flags=-I modules/kic_parser/include -I modules/kic_timestamp/include" \
+                "-x" "c++" "$file"
             done
