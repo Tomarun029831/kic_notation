@@ -1,5 +1,6 @@
 #include "flyweight_kic_parser.h"
 #include "kic_parser/kic_parser_specifications.h"
+#include <stddef.h>
 
 #define KIC_HEADER "KIC:" KIC_VERSION
 #define KIC_SEPARATOR ';'
@@ -81,7 +82,7 @@ const Timestamp get_kic_timestamp(const char *string) {
       TIMESTAMP_RAW((string[OFFSET_TO_KIC_TIMESTAMP + 0] - '0'),
                     (hour + (string[OFFSET_TO_KIC_TIMESTAMP + 3] - '0') * 10 +
                      (string[OFFSET_TO_KIC_TIMESTAMP + 4] - '0')),
-                    is_PM);
+                    is_PM, 0);
   return time;
 }
 
@@ -103,7 +104,7 @@ const char *find_kic_schedule(const char *string, const char day) {
   const char converted_day =
       (day >= '0') ? day : day + '0'; // HACK: char is char, int to char
 #define OFFSET_TO_HEADER_OF_KIC_SCHEDULES (sizeof(KIC_HEADER ";DHHMM;HHHHWWWW"))
-  string += (OFFSET_TO_HEADER_OF_KIC_SCHEDULES);
+  string += OFFSET_TO_HEADER_OF_KIC_SCHEDULES;
 
   for (;; string += KIC_SCHEDULE_PAYLOAD_LEN) {
     if (*string == KIC_TERMINATOR || *string == '\0')
@@ -115,4 +116,20 @@ const char *find_kic_schedule(const char *string, const char day) {
     }
   }
   return KIC_SCHEDULE_NOT_FOUND;
+}
+
+const Timestamp get_kic_time_in_schedule(const char *ptr_to_schedule,
+                                         const size_t idx) {
+  const char *ptr_to_first_time = ptr_to_schedule + 1;
+  for (size_t tidx = 0; tidx <= idx; tidx++) {
+    if (*(ptr_to_first_time + tidx * KIC_SCHEDULE_PAYLOAD_LEN) == KIC_SEPARATOR)
+      return KIC_TIME_NOT_FOUND;
+  }
+#define DAY (*ptr_to_schedule - '0')
+#define OFFSET_TO_FOUND_TIME                                                   \
+  (ptr_to_first_time + KIC_SCHEDULE_PAYLOAD_LEN * idx)
+  return TIMESTAMP(DAY, (*(OFFSET_TO_FOUND_TIME + 0) - '0') * 1000 +
+                            (*(OFFSET_TO_FOUND_TIME + 1) - '0') * 100 +
+                            (*(OFFSET_TO_FOUND_TIME + 2) - '0') * 10 +
+                            (*(OFFSET_TO_FOUND_TIME + 3) - '0'));
 }
