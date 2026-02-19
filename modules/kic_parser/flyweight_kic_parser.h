@@ -53,10 +53,11 @@ typedef struct {
 // if you cannot ensure that the argument of this function follows kic-format
 BoardSize get_kic_boardsize(const char *string);
 
+#define KIC_SCHEDULE_NOT_FOUND ((const char *)0) // HACK:
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),
 // if you cannot ensure that the argument of this function follows kic-format
-const char *find_kic_schedule(const char *string);
+const char *find_kic_schedule(const char *string, const char day);
 
 // this function will NOT check the syntax,
 // So you need to call check_kic_syntax(const char *string),

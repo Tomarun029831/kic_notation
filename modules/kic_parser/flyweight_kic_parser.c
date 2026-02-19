@@ -98,3 +98,21 @@ BoardSize get_kic_boardsize(const char *string) {
                     (string[OFFSET_TO_KIC_BOARDSIZE + 7] - '0'));
   return size;
 }
+
+const char *find_kic_schedule(const char *string, const char day) {
+  const char converted_day =
+      (day >= '0') ? day : day + '0'; // HACK: char is char, int to char
+#define OFFSET_TO_HEADER_OF_KIC_SCHEDULES (sizeof(KIC_HEADER ";DHHMM;HHHHWWWW"))
+  string += (OFFSET_TO_HEADER_OF_KIC_SCHEDULES);
+
+  for (;; string += KIC_SCHEDULE_PAYLOAD_LEN) {
+    if (*string == KIC_TERMINATOR || *string == '\0')
+      break;
+    else if (*(string - 1) == KIC_SEPARATOR) {
+      if (*string == converted_day)
+        return string;
+      string += 2;
+    }
+  }
+  return KIC_SCHEDULE_NOT_FOUND;
+}
