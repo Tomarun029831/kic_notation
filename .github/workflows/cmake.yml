@@ -39,4 +39,7 @@ jobs:
       - name: Install PlatformIO
         run: pip install -U platformio
       - name: Build for ESP32
-        run: pio ci --board esp32dev --lib="."
+              run: |
+                for file in test/kic_parser/*.c test/kic_timestamp/*.c; do
+                  pio ci --board esp32dev --lib="." "$file"
+                done
