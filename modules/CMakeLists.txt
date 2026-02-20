@@ -48,3 +48,7 @@ configure_package_config_file(
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kic_notationConfig.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kic_notation
 )
+
+install(FILES "${PROJECT_SOURCE_DIR}/LICENSE"
+        DESTINATION "."
+        COMPONENT Runtime)
