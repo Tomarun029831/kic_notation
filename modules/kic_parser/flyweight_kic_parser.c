@@ -10,9 +10,9 @@ const unsigned char check_kic_compatibility(const char *string) {
   const char *kic_header = KIC_HEADER;
   for (;; string++, kic_header++) {
     if (*kic_header == ((char)'\0') && *string == KIC_SEPARATOR)
-      return KIC_CONPATIBLE;
+      return KIC_COMPATIBLE;
     else if (*string != *kic_header)
-      return KIC_INCONPATIBLE;
+      return KIC_INCOMPATIBLE;
   }
 }
 

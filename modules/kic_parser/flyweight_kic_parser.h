@@ -3,8 +3,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define KIC_CONPATIBLE ((unsigned char)0)
-#define KIC_INCONPATIBLE ((unsigned char)1)
+#define KIC_COMPATIBLE ((unsigned char)0)
+#define KIC_INCOMPATIBLE ((unsigned char)1)
 const unsigned char check_kic_compatibility(const char *string);
 
 #define KIC_SYNTAX_CORRECT ((unsigned char)0)
