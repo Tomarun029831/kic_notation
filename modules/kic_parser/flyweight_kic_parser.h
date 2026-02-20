@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 #pragma once
+#ifdef ARDUINO
+#include "../kic_timestamp/kic_timestamp.h"
+#else
 #include "kic_timestamp/kic_timestamp.h"
+#endif // ARDUINO
 #include <stddef.h>
 #include <stdint.h>
 
