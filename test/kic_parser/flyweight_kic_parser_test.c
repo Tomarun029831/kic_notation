@@ -145,7 +145,7 @@ static inline void kic_find_time_in_schedule_test() {
     ptrdiff_t idx = head - kic_correct_syntax;
     const char *schedule = find_kic_schedule(*head, args_to_find_schedule[idx]);
     const KIC_Timestamp result =
-        get_kic_time_in_schedule(schedule, args_to_get_time[idx]);
+        find_kic_time_in_schedule(schedule, args_to_get_time[idx]);
     assert(expected_timestamps[idx].raw == result.raw);
   }
 }
