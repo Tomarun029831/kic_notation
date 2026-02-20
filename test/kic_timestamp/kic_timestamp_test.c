@@ -1,7 +1,15 @@
+/*
+ * Copyright (c) 2026 Tomarun029831
+ * SPDX-License-Identifier: MIT
+ */
 #ifdef __cplusplus
 extern "C" {
 #endif
+#ifdef ARDUINO
+#include "../../modules/kic_timestamp/kic_timestamp.h"
+#else
 #include "kic_timestamp/kic_timestamp.h"
+#endif /* ifdef MACRO */
 #ifdef __cplusplus
 }
 #endif

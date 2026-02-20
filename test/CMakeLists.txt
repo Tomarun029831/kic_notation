@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Tomarun029831
+# SPDX-License-Identifier: MIT
 option(KIC_PARSER_TESTS "Build tests for kic_parser" ON)
 option(KIC_TIMESTAMP_TESTS "Build tests for timestamp" ON)
 

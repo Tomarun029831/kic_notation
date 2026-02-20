@@ -1,5 +1,9 @@
+/*
+ * Copyright (c) 2026 Tomarun029831
+ * SPDX-License-Identifier: MIT
+ */
 #include "flyweight_kic_parser.h"
-#include "kic_parser/kic_parser_specifications.h"
+#include "kic_parser_specifications.h"
 #include <stddef.h>
 
 #define KIC_HEADER "KIC:" KIC_VERSION
