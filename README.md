@@ -33,6 +33,27 @@ The library utilizes a `union` with bit-fields to minimize RAM usage while provi
 
 ---
 
+## ⚡ Performance & Complexity
+### By leveraging Direct Mapping and fixed-width protocols, kic_notation achieves near-theoretical limits for string parsing on embedded hardware.
+
+| Function | Algorithm | Complexity | Performance Characteristic |
+| --- | --- | --- | --- |
+|check_kic_compatibility|Fixed-string Comparison|O(1)|Anchored header check. Constant time based on version string length.|
+|check_kic_syntax|Bounded Linear Scan|O(Nmax​)|Strict validation of all segments. Time is bounded by protocol max length.|
+|get_kic_timestamp|Direct Mapping|O(1)|Zero-loop extraction. Uses compile-time fixed offsets.|
+|get_kic_boardsize|Direct Mapping|O(1)|Immediate memory access. No string searching or scanning.|
+|find_kic_schedule|Stride Linear Search|O(M)|Jumps in 4-byte strides to find matching day. M≤ max schedules.|
+|get_kic_time_in_schedule|Indexed Validation|O(I)|Validated offset jump to index I within a specific schedule block.|
+|TIMESTAMP|Bit-packing|O(1)|Inline construction of bit-fields. Minimal CPU cycles.|
+|KIC_Timestamp_Compare|Atomic Raw Comparison|O(1)|Single-instruction 32-bit integer comparison.|
+|KIC_Timestamp_AddMs|Cascading Arithmetic|O(1)|Sequential addition with carry-over logic. No recursion.|
+|KIC_Timestamp_AddSec|Cascading Arithmetic|O(1)|Sequential addition with carry-over logic.|
+|KIC_Timestamp_AddMin|Cascading Arithmetic|O(1)|Sequential addition with carry-over logic.|
+|KIC_Timestamp_AddHour|Cycle-aware Arithmetic|O(1)|Modular arithmetic to handle 12h roll-over and AM/PM toggle.|
+|KIC_Timestamp_AddDay|Modular Arithmetic|O(1)|Single modulo operation (% 7) to handle day-of-week roll-over.|
+
+---
+
 ## 📝 KIC Format Specification
 
 The KIC format is a semicolon-delimited string designed for easy transmission and low-cost parsing:

@@ -45,12 +45,12 @@ static inline void kic_version_test() {
       "KIC:" KIC_VERSION ";/", "KIC:" KIC_VERSION ";01290;03000300;00900/"};
   kic_boolean_test_iterator(kic_correct_version,
                             ARRAY_SIZE(kic_correct_version),
-                            check_kic_compatibility, KIC_CONPATIBLE);
+                            check_kic_compatibility, KIC_COMPATIBLE);
   const char *const kic_incorrect_version[] = {"KIC:V0;/", "AIC:V0;/",
                                                "KAC:V0;/", "KIA:V0;/"};
   kic_boolean_test_iterator(kic_incorrect_version,
                             ARRAY_SIZE(kic_incorrect_version),
-                            check_kic_compatibility, KIC_INCONPATIBLE);
+                            check_kic_compatibility, KIC_INCOMPATIBLE);
 }
 
 static inline void kic_syntax_test() {
@@ -145,7 +145,7 @@ static inline void kic_find_time_in_schedule_test() {
     ptrdiff_t idx = head - kic_correct_syntax;
     const char *schedule = find_kic_schedule(*head, args_to_find_schedule[idx]);
     const KIC_Timestamp result =
-        get_kic_time_in_schedule(schedule, args_to_get_time[idx]);
+        find_kic_time_in_schedule(schedule, args_to_get_time[idx]);
     assert(expected_timestamps[idx].raw == result.raw);
   }
 }

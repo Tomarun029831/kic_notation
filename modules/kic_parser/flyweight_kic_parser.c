@@ -10,9 +10,9 @@ const unsigned char check_kic_compatibility(const char *string) {
   const char *kic_header = KIC_HEADER;
   for (;; string++, kic_header++) {
     if (*kic_header == ((char)'\0') && *string == KIC_SEPARATOR)
-      return KIC_CONPATIBLE;
+      return KIC_COMPATIBLE;
     else if (*string != *kic_header)
-      return KIC_INCONPATIBLE;
+      return KIC_INCOMPATIBLE;
   }
 }
 
@@ -118,8 +118,8 @@ const char *find_kic_schedule(const char *string, const char day) {
   return KIC_SCHEDULE_NOT_FOUND;
 }
 
-const KIC_Timestamp get_kic_time_in_schedule(const char *ptr_to_schedule,
-                                             const size_t idx) {
+const KIC_Timestamp find_kic_time_in_schedule(const char *ptr_to_schedule,
+                                              const size_t idx) {
   const char *ptr_to_first_time = ptr_to_schedule + 1;
   for (size_t tidx = 0; tidx <= idx; tidx++) {
     if (*(ptr_to_first_time + tidx * KIC_SCHEDULE_PAYLOAD_LEN) == KIC_SEPARATOR)
