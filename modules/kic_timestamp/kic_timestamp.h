@@ -15,7 +15,7 @@ typedef union {
 
 #define HALF_DAY_OFFSET (1200)
 static inline KIC_Timestamp TIMESTAMP(uint32_t d, uint32_t t) {
-  const char is_PM = (t >= HALF_DAY_OFFSET);
+  const uint32_t is_PM = (t >= HALF_DAY_OFFSET);
   return (KIC_Timestamp){
       .segments = {.millisecond = 0,
                    .second = 0,
