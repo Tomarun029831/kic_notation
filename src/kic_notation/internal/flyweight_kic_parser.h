@@ -2,7 +2,7 @@
  * Copyright (c) 2026 Tomarun029831
  * SPDX-License-Identifier: MIT
  */
-// IWYU pragma: private, include "kic_notation.h"
+// IWYU pragma: private, include <kic_notation.h>
 #pragma once
 #ifdef ARDUINO
 #include "../kic_timestamp/kic_timestamp.h"
