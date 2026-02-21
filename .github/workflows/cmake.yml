@@ -32,16 +32,16 @@ jobs:
       working-directory: build
       run: ctest -C Release --output-on-failure
 
-arduino-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Arduino Lint
-        uses: arduino/arduino-lint-action@v1
-        with:
-          path: .
-          library-manager: update
+  arduino-lint:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Arduino Lint
+          uses: arduino/arduino-lint-action@v1
+          with:
+            path: .
+            library-manager: update
 
   esp32-build:
       runs-on: ubuntu-latest
