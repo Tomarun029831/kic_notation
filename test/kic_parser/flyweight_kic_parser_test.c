@@ -5,15 +5,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#ifdef ARDUINO
-#include "../../modules/kic_parser/flyweight_kic_parser.h"
-#include "../../modules/kic_parser/kic_parser_specifications.h"
-#include "../../modules/kic_timestamp/kic_timestamp.h"
-#else
 #include "kic_parser/flyweight_kic_parser.h"
 #include "kic_parser/kic_parser_specifications.h"
 #include "kic_timestamp/kic_timestamp.h"
-#endif /* ifdef MACRO */
 #ifdef __cplusplus
 }
 #endif
