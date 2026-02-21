@@ -1,66 +1,48 @@
 # Copyright (c) 2026 Tomarun029831
 # SPDX-License-Identifier: MIT
 
-add_library(kic_timestamp STATIC)
-target_sources(kic_timestamp
-    PRIVATE kic_timestamp/kic_timestamp.c
-    PUBLIC
-        FILE_SET HEADERS BASE_DIRS "."
-        FILES kic_timestamp/kic_timestamp.h
+add_library(kic_internal STATIC
+    kic_parser/flyweight_kic_parser.c
+    kic_timestamp/kic_timestamp.c
 )
-target_include_directories(kic_timestamp PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-
-add_library(kic_parser STATIC)
-target_sources(kic_parser
-    PRIVATE kic_parser/flyweight_kic_parser.c
-    PUBLIC
-        FILE_SET HEADERS BASE_DIRS "."
-        FILES kic_parser/flyweight_kic_parser.h
-)
-target_link_libraries(kic_parser PRIVATE kic_timestamp)
-target_include_directories(kic_parser PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+target_include_directories(kic_internal PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(kic_notation INTERFACE)
-target_sources(kic_notation INTERFACE
-    FILE_SET HEADERS BASE_DIRS "."
-    FILES kic_notation.h
-)
-target_link_libraries(kic_notation INTERFACE kic_parser kic_timestamp)
+target_link_libraries(kic_notation INTERFACE kic_internal)
 
 target_include_directories(kic_notation
-    INTERFACE
+    SYSTEM INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/kic_notation>
+    INTERFACE
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-
-add_library(kic_notation::kic_notation ALIAS kic_notation)
 
 include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
 
-install(TARGETS kic_parser kic_timestamp kic_notation
-    EXPORT kic_notationTargets
+install(FILES kic_notation.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY kic_notation/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kic_notation)
+
+install(TARGETS kic_internal kic_notation
+    EXPORT kic_notation_targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    FILE_SET HEADERS DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kic_notation
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-install(EXPORT kic_notationTargets
+install(EXPORT kic_notation_targets
     FILE kic_notationTargets.cmake
     NAMESPACE kic_notation::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kic_notation
 )
 
-configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/kic_notationConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/kic_notationConfig.cmake"
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kic_notation
+include(CMakePackageConfigHelpers)
+write_basic_config_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/kic_notationConfigVersion.cmake"
+    VERSION 1.0.2
+    COMPATIBILITY AnyNewerVersion
 )
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kic_notationConfig.cmake"
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/kic_notationConfigVersion.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kic_notation
 )
-
-install(FILES "${PROJECT_SOURCE_DIR}/LICENSE"
-        DESTINATION "."
-        COMPONENT Runtime)

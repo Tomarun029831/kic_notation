@@ -2,7 +2,7 @@
  * Copyright (c) 2026 Tomarun029831
  * SPDX-License-Identifier: MIT
  */
-#include "kic_timestamp.h"
+#include "kic_notation/internal/kic_timestamp.h"
 
 #define GET_MIN(hm) ((hm) % 100)
 #define GET_HOUR(hm) ((hm) / 100)
