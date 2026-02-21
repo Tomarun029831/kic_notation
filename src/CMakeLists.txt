@@ -10,10 +10,10 @@ target_include_directories(kic_internal PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(kic_notation INTERFACE)
 target_link_libraries(kic_notation INTERFACE kic_internal)
 
-target_include_directories(kic_notation 
-    SYSTEM INTERFACE 
+target_include_directories(kic_notation
+    SYSTEM INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    INTERFACE 
+    INTERFACE
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
@@ -38,7 +38,7 @@ install(EXPORT kic_notation_targets
 include(CMakePackageConfigHelpers)
 write_basic_config_version_file(
     "${CMAKE_CURRENT_BINARY_DIR}/kic_notationConfigVersion.cmake"
-    VERSION 1.0.1
+    VERSION 1.0.2
     COMPATIBILITY AnyNewerVersion
 )
 
