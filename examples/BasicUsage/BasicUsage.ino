@@ -27,7 +27,7 @@ void setup() {
     if (schedule != KIC_SCHEDULE_NOT_FOUND) {
       // Get first time of events
       KIC_Timestamp event = find_kic_time_in_schedule(schedule, 0);
-      if (!event.segments.is_invalid) { // or event != KIC_TIME_NOT_FOUND
+      if (event != KIC_TIME_NOT_FOUND) {
         Serial.print("First event hour_min: ");
         Serial.println(event.segments.hour_min);
       }
