@@ -7,5 +7,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # for lsp
 include(CTest)
 enable_testing()
 
-add_subdirectory(modules)
+add_subdirectory(src)
 add_subdirectory(test)

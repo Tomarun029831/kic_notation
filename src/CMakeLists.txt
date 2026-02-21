@@ -23,6 +23,14 @@ target_sources(kic_parser
 )
 target_link_libraries(kic_parser PUBLIC kic_timestamp)
 
+target_sources(kic_parser
+    PUBLIC
+        FILE_SET HEADERS
+        BASE_DIRS "."
+        FILES
+            kic_notation.h
+)
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
