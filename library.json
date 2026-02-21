@@ -1,7 +1,7 @@
 {
     "name": "kic_notation",
     "version": "1.0.0",
-    "description": "High-performance KIC notation parser optimized for ESP32. Features O(1) direct mapping, O(M) stride search, and zero-allocation parsing.",
+    "description": "High-performance KIC notation parser optimized for embedded systems. Features O(1) direct mapping, O(M) stride search, and zero-allocation parsing.",
     "keywords": "kic, parser, esp32, embedded, real-time",
     "repository": {
         "type": "git",
@@ -15,15 +15,8 @@
     ],
     "license": "MIT",
     "frameworks": "*",
-    "platforms": "espressif32",
-    "build": {
-        "flags": [
-            "-I modules/kic_parser",
-            "-I modules/kic_timestamp"
-        ],
-        "srcFilter": [
-            "+<modules/kic_parser/*.c>",
-            "+<modules/kic_timestamp/*.c>"
-        ]
+    "platforms": "*",
+    "export": {
+        "include": "src"
     }
 }

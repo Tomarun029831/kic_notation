@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Tomarun029831
+# SPDX-License-Identifier: MIT
 name: Build and Test
 
 on:
@@ -43,9 +45,9 @@ jobs:
         - name: Build for ESP32
           run: |
             find test -name "*.c" -exec sh -c 'mv "$1" "${1%.c}.cpp"' _ {} \;
-  
             for file in test/kic_parser/*.cpp test/kic_timestamp/*.cpp; do
               pio ci --board esp32dev --lib="." \
-                --project-option="build_flags=-I modules/kic_parser/include -I modules/kic_timestamp/include" \
+                --project-option="lib_ldf_mode=deep" \
+                --project-option="build_flags=-I src" \
                 "$file"
             done

@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Tomarun029831 -->
+<!-- SPDX-License-Identifier: MIT -->
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32-blue.svg)
 [![Build and Test](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml/badge.svg)](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml)
@@ -13,6 +15,15 @@ A high-performance, **zero-copy** music/schedule notation parser and timestamp m
 * **Embedded Friendly**: Native support for Arduino (integrated test suite) and standard PC environments.
 * **Robust Validation**: Includes a strict syntax checker to ensure data integrity before processing.
 * **Modern CMake**: Fully supports `find_package()` and `FetchContent` with proper export targets.
+
+---
+
+## 📋 Requirements & Dependencies
+
+This library is designed for maximum portability and has **zero external dependencies**. 
+
+- **Language**: Standard C99 or later.
+- **Standard Headers**: Requires only `stdint.h` and `stddef.h` (provided by any standard-compliant C compiler/libc).
 
 ---
 
@@ -76,15 +87,15 @@ The KIC format is a semicolon-delimited string designed for easy transmission an
 ### C API Example
 
 ```c
-#include <kic_notation/kic_parser/flyweight_kic_parser.h>
+#include <kic_notation.h>
 
-const char* data = "KIC:V1;01200;00400030;110001230/";
+const char* data = "KIC:V3;01200;00400030;110001230/";
 
 // 1. Validate Syntax
 if (check_kic_syntax(data) == KIC_SYNTAX_CORRECT) {
     // 2. Get Timestamp (Zero-copy)
     KIC_Timestamp ts = get_kic_timestamp(data);
-    
+
     // 3. Find specific schedule for Day 1
     const char* schedule = find_kic_schedule(data, 1);
     if (schedule != KIC_SCHEDULE_NOT_FOUND) {
