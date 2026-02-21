@@ -1,0 +1,35 @@
+#######################################
+# Syntax Coloring Map For kic_notation
+#######################################
+
+# Datatypes (KEYWORD1: Types and Structs)
+KIC_Timestamp	KEYWORD1
+BoardSize	KEYWORD1
+KIC_SchedulePtr	KEYWORD1
+
+# Methods and Functions (KEYWORD2: Functions and Methods)
+check_kic_compatibility	KEYWORD2
+check_kic_syntax	KEYWORD2
+get_kic_timestamp	KEYWORD2
+get_kic_boardsize	KEYWORD2
+find_kic_schedule	KEYWORD2
+find_kic_time_in_schedule	KEYWORD2
+TIMESTAMP	KEYWORD2
+KIC_Timestamp_Compare	KEYWORD2
+KIC_Timestamp_AddMs	KEYWORD2
+KIC_Timestamp_AddSec	KEYWORD2
+KIC_Timestamp_AddMin	KEYWORD2
+KIC_Timestamp_AddHour	KEYWORD2
+KIC_Timestamp_AddDay	KEYWORD2
+
+# Constants and Macros (LITERAL1: Defines and Enumerations)
+KIC_COMPATIBLE	LITERAL1
+KIC_INCOMPATIBLE	LITERAL1
+KIC_SYNTAX_CORRECT	LITERAL1
+KIC_SYNTAX_ERROR	LITERAL1
+BOARDSIZE	LITERAL1
+KIC_SCHEDULE_NOT_FOUND	LITERAL1
+KIC_TIME_NOT_FOUND	LITERAL1
+TIMESTAMP_RAW	LITERAL1
+HALF_DAY_OFFSET	LITERAL1
+KIC_VERSION	LITERAL1
