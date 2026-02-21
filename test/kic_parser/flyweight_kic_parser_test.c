@@ -5,9 +5,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "kic_parser/flyweight_kic_parser.h"
-#include "kic_parser/kic_parser_specifications.h"
-#include "kic_timestamp/kic_timestamp.h"
+#include "kic_notation.h"
 #ifdef __cplusplus
 }
 #endif
