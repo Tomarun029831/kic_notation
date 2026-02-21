@@ -12,7 +12,7 @@ target_link_libraries(kic_notation INTERFACE kic_internal)
 
 target_include_directories(kic_notation
     INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
