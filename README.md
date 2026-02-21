@@ -56,7 +56,7 @@ To verify the "insane" performance, we measured a **Full-API call sequence** (Va
 | :--- | :--- |
 | **Average Speed** | **4.30 nanoseconds** per full-parse |
 | **Throughput** | **~230,000,000** parses per second |
-| **Test Data** | `KIC:V1;01200;00400030;110001230;209001800;30830/` |
+| **Test Data** | `KIC:V1;01200;00400030;01454;110001230;209001800;30830;40901;512341034;610304050/` |
 
 ### 💾 Static Analysis (Binary Size)
 Verified with `size.exe` (GCC -Os). The library achieves a pure **Zero-static-RAM** architecture.
