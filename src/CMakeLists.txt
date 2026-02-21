@@ -11,12 +11,15 @@ add_library(kic_notation INTERFACE)
 target_link_libraries(kic_notation INTERFACE kic_internal)
 
 target_include_directories(kic_notation
+    SYSTEM INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+)
+target_include_directories(kic_notation
     INTERFACE
-        $<BUILD_INTERFACE:SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 target_compile_options(kic_notation INTERFACE
-    $<$<COMPILE_LANGUAGE:C,CXX>:-isystem${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<$<COMPILE_LANGUAGE:C,CXX>:-isystem${CMAKE_CURRENT_SOURCE_DIR}>
 )
 include(GNUInstallDirs)
 
