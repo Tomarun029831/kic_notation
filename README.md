@@ -78,7 +78,7 @@ Verified with `size.exe` (GCC -Os). The library achieves a pure **Zero-static-RA
 |get_kic_timestamp|Direct Mapping|O(1)|Zero-loop extraction. Uses compile-time fixed offsets.|
 |get_kic_boardsize|Direct Mapping|O(1)|Immediate memory access. No string searching or scanning.|
 |find_kic_schedule|Stride Linear Search|O(M)|Jumps in 4-byte strides to find matching day. M≤ max schedules.|
-|get_kic_time_in_schedule|Indexed Validation|O(I)|Validated offset jump to index I within a specific schedule block.|
+|find_kic_time_in_schedule|Indexed Validation|O(I)|Validated offset jump to index I within a specific schedule block.|
 |TIMESTAMP|Bit-packing|O(1)|Inline construction of bit-fields. Minimal CPU cycles.|
 |KIC_Timestamp_Compare|Atomic Raw Comparison|O(1)|Single-instruction 32-bit integer comparison.|
 |KIC_Timestamp_AddMs|Cascading Arithmetic|O(1)|Sequential addition with carry-over logic. No recursion.|
@@ -123,7 +123,7 @@ if (check_kic_syntax(data) == KIC_SYNTAX_CORRECT) {
     // 3. Find specific schedule for Day 1
     const char* schedule = find_kic_schedule(data, 1);
     if (schedule != KIC_SCHEDULE_NOT_FOUND) {
-        KIC_Timestamp event = get_kic_time_in_schedule(schedule, 0);
+        KIC_Timestamp event = find_kic_time_in_schedule(schedule, 0);
     }
 }
 
