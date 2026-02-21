@@ -15,7 +15,9 @@ target_include_directories(kic_notation
         $<BUILD_INTERFACE:SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-
+target_compile_options(kic_notation INTERFACE
+    $<$<COMPILE_LANGUAGE:C,CXX>:-isystem${CMAKE_CURRENT_SOURCE_DIR}/src>
+)
 include(GNUInstallDirs)
 
 install(FILES kic_notation.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
