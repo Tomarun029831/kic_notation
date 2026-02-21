@@ -4,9 +4,12 @@
 ![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32-blue.svg)
 [![Build and Test](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml/badge.svg)](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml)
 
+# background
+Note: This library was born to parse a "ridiculous" format created with a friend. While the goal was to minimize communication bandwidth, we ended up achieving "insane" speeds and "joke-like" memory consumption for embedded systems.
+
 # kic_notation
 
-A high-performance, **zero-copy** music/schedule notation parser and timestamp management library written in pure C99. Specifically optimized for resource-constrained environments like **Arduino**, **ESP32**, and other MCU platforms.
+A high-performance, **zero-copy** music/schedule notation parser and timestamp management library written in pure C99 and some standard libraries. Specifically optimized for resource-constrained environments like **Arduino**, **ESP32**, and other MCU platforms.
 
 ## 🚀 Key Features
 
@@ -44,9 +47,30 @@ The library utilizes a `union` with bit-fields to minimize RAM usage while provi
 
 ---
 
-## ⚡ Performance & Complexity
-### By leveraging Direct Mapping and fixed-width protocols, kic_notation achieves near-theoretical limits for string parsing on embedded hardware.
+## ⚡ Performance & Memory Footprint
 
+### 📊 Benchmark Results (Verified Reality)
+To verify the "insane" performance, we measured a **Full-API call sequence** (Validation + Extraction + Schedule Search) using randomized inputs.
+
+| Metric | Measured Value |
+| :--- | :--- |
+| **Average Speed** | **4.30 nanoseconds** per full-parse |
+| **Throughput** | **~230,000,000** parses per second |
+| **Test Data** | `KIC:V1;01200;00400030;110001230;209001800;30830/` |
+
+### 💾 Static Analysis (Binary Size)
+Verified with `size.exe` (GCC -Os). The library achieves a pure **Zero-static-RAM** architecture.
+
+| Component | Text (Code) | Data (RAM) | BSS (RAM) |
+| :--- | :---: | :---: | :---: |
+| `flyweight_kic_parser.o` | 832 B | **0 B** | **0 B** |
+| `kic_timestamp.o` | 1,172 B | **0 B** | **0 B** |
+| **Total Footprint** | **~2.0 KB** | **0 B** | **0 B** |
+
+* **Heap Usage**: **0 bytes** (No `malloc` / `free`).
+* **Static RAM Usage**: **0 bytes** (No global variables).
+
+### ⚙️ Algorithm Complexity
 | Function | Algorithm | Complexity | Performance Characteristic |
 | --- | --- | --- | --- |
 |check_kic_compatibility|Fixed-string Comparison|O(1)|Anchored header check. Constant time based on version string length.|
