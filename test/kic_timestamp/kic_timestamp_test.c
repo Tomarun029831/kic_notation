@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 #ifdef ARDUINO
-#include "../../modules/kic_timestamp/kic_timestamp.h"
+#include "../../src/kic_timestamp/kic_timestamp.h"
 #else
 #include "kic_timestamp/kic_timestamp.h"
 #endif /* ifdef MACRO */

@@ -6,9 +6,9 @@
 extern "C" {
 #endif
 #ifdef ARDUINO
-#include "../../modules/kic_parser/flyweight_kic_parser.h"
-#include "../../modules/kic_parser/kic_parser_specifications.h"
-#include "../../modules/kic_timestamp/kic_timestamp.h"
+#include "../../src/kic_parser/flyweight_kic_parser.h"
+#include "../../src/kic_parser/kic_parser_specifications.h"
+#include "../../src/kic_timestamp/kic_timestamp.h"
 #else
 #include "kic_parser/flyweight_kic_parser.h"
 #include "kic_parser/kic_parser_specifications.h"
