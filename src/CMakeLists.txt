@@ -13,6 +13,7 @@ target_sources(kic_timestamp
 target_include_directories(kic_timestamp
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    INTERFACE
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/kic_notation>
 )
 
@@ -37,6 +38,7 @@ target_sources(kic_parser
 target_include_directories(kic_parser
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    INTERFACE
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/kic_notation>
 )
 
