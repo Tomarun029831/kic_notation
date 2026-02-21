@@ -4,8 +4,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "kic_parser/flyweight_kic_parser.h"
-#include "kic_timestamp/kic_timestamp.h"
+#include "kic_parser/flyweight_kic_parser.h" // IWYU pragma: export
+#include "kic_timestamp/kic_timestamp.h"     // IWYU pragma: export
 #ifdef __cplusplus
 }
 #endif // KIC_NOTATION_H
