@@ -1,7 +1,7 @@
 {
     "name": "kic_notation",
     "version": "1.0.4",
-    "description": "High-performance KIC notation parser optimized for embedded systems. Features O(1) direct mapping, O(M) stride search, and zero-allocation parsing.",
+    "description": "High-performance KIC notation parser optimized for embedded systems. A ridiculously fast (ave. 4.4ns on x64) and zero-RAM (0B) schedule notation parser.",
     "keywords": "kic, parser, arduino, esp32, embedded, real-time",
     "repository": {
         "type": "git",

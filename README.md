@@ -49,8 +49,10 @@ The library utilizes a `union` with bit-fields to minimize RAM usage while provi
 
 ## ⚡ Performance & Memory Footprint
 
-### 📊 Benchmark Results (Verified Reality)
+### 📊 Benchmark Results
 To verify the "insane" performance, we measured a **Full-API call sequence** (Validation + Extraction + Schedule Search) using randomized inputs.
+[!NOTE]
+These benchmarks were measured on an x86_64 host environment to determine the library's theoretical peak performance. Actual speed on MCUs will scale relative to their clock frequency and architecture.
 
 | Metric | Measured Value |
 | :--- | :--- |
