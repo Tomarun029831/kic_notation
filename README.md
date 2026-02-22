@@ -2,7 +2,8 @@
 <!-- SPDX-License-Identifier: MIT -->
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32-blue.svg)
-[![Build and Test](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml/badge.svg?branch=main)](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml)
+[![Build and Test](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml/badge.svg)](https://github.com/Tomarun029831/kic_notation/actions/workflows/cmake.yml)
+
 # background
 Note: This library was born to parse a "ridiculous" format created with a friend. While the goal was to minimize communication bandwidth, we ended up achieving "insane" speeds and "joke-like" memory consumption for embedded systems.
 
