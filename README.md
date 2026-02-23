@@ -9,7 +9,7 @@ Note: This library was born to parse a "ridiculous" format created with a friend
 
 # kic_notation
 
-A high-performance, **zero-copy** music/schedule notation parser and timestamp management library written in pure C99 and some standard libraries. Specifically optimized for resource-constrained environments like **Arduino**, **ESP32**, and other MCU platforms.
+A high-performance, **zero-copy** schedule notation parser and timestamp management library written in pure C99 and some standard libraries. Specifically optimized for resource-constrained environments like **Arduino**, **ESP32**, and other MCU platforms.
 
 ## 🚀 Key Features
 
