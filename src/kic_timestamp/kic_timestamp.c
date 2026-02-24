@@ -8,53 +8,68 @@
 #define GET_HOUR(hm) ((hm) / 100)
 
 void KIC_Timestamp_AddDay(KIC_Timestamp *ts, uint32_t day) {
-  ts->segments.day = (ts->segments.day + day) % 7;
+  if (!day)
+    return;
+  ts->segments.day = (ts->segments.day + (day % 7)) % 7;
 }
 
 void KIC_Timestamp_AddHour(KIC_Timestamp *ts, uint32_t hour) {
-  uint32_t h = GET_HOUR(ts->segments.hour_min) + hour;
-  uint32_t m = GET_MIN(ts->segments.hour_min);
+  if (!hour)
+    return;
+  uint32_t hm = ts->segments.hour_min;
+  uint64_t h = (uint64_t)(hm / 100) + hour;
 
-  uint32_t total_12h_blocks = h / 12;
-  ts->segments.hour_min = ((h % 12) * 100) + m;
+  ts->segments.hour_min = ((uint32_t)(h % 12) * 100) + (hm % 100);
 
-  if (total_12h_blocks > 0) {
-    if (total_12h_blocks % 2 != 0) {
-      if (ts->segments.is_PM) {
-        ts->segments.is_PM = 0;
-        KIC_Timestamp_AddDay(ts, 1);
-      } else {
-        ts->segments.is_PM = 1;
-      }
-    }
-    if (total_12h_blocks / 2 > 0) {
-      KIC_Timestamp_AddDay(ts, total_12h_blocks / 2);
+  uint32_t blocks = (uint32_t)(h / 12);
+  if (blocks > 0) {
+    uint32_t flips = blocks & 1;
+    uint32_t days_to_add = (blocks >> 1) + ((ts->segments.is_PM + flips) >> 1);
+    ts->segments.is_PM ^= flips;
+
+    if (days_to_add > 0) {
+      ts->segments.day = (ts->segments.day + (days_to_add % 7)) % 7;
     }
   }
 }
 
 void KIC_Timestamp_AddMin(KIC_Timestamp *ts, uint32_t min) {
-  uint32_t h = GET_HOUR(ts->segments.hour_min);
-  uint32_t m = GET_MIN(ts->segments.hour_min) + min;
+  if (!min)
+    return;
 
-  ts->segments.hour_min = (h * 100) + (m % 60);
-  if (m / 60 > 0) {
-    KIC_Timestamp_AddHour(ts, m / 60);
+  uint32_t hm = ts->segments.hour_min;
+  uint64_t m = (uint64_t)(hm % 100) + min;
+
+  ts->segments.hour_min = ((hm / 100) * 100) + (uint32_t)(m % 60);
+
+  uint32_t add_h = (uint32_t)(m / 60);
+  if (add_h > 0) {
+    KIC_Timestamp_AddHour(ts, add_h);
   }
 }
 
 void KIC_Timestamp_AddSec(KIC_Timestamp *ts, uint32_t sec) {
-  uint32_t s = ts->segments.second + sec;
-  ts->segments.second = s % 60;
-  if (s / 60 > 0) {
-    KIC_Timestamp_AddMin(ts, s / 60);
+  if (!sec)
+    return;
+
+  uint64_t s = (uint64_t)ts->segments.second + sec;
+  ts->segments.second = (uint32_t)(s % 60);
+
+  uint32_t add_m = (uint32_t)(s / 60);
+  if (add_m > 0) {
+    KIC_Timestamp_AddMin(ts, add_m);
   }
 }
 
 void KIC_Timestamp_AddMs(KIC_Timestamp *ts, uint32_t ms) {
-  uint32_t msec = ts->segments.millisecond + ms;
-  ts->segments.millisecond = msec % 1000;
-  if (msec / 1000 > 0) {
-    KIC_Timestamp_AddSec(ts, msec / 1000);
+  if (!ms)
+    return;
+
+  uint64_t msec = (uint64_t)ts->segments.millisecond + ms;
+  ts->segments.millisecond = (uint32_t)(msec % 1000);
+
+  uint32_t add_s = (uint32_t)(msec / 1000);
+  if (add_s > 0) {
+    KIC_Timestamp_AddSec(ts, add_s);
   }
 }
