@@ -111,7 +111,8 @@ const char *find_kic_schedule(const char *string, const char day) {
     else if (*(string - 1) == KIC_SEPARATOR) {
       if (*string == converted_day)
         return string;
-      string += 2;
+#define OFFSET_TO_PREPARE_TO_SLIDE_NEXT_SCHEDULE 2
+      string += OFFSET_TO_PREPARE_TO_SLIDE_NEXT_SCHEDULE;
     }
   }
   return KIC_SCHEDULE_NOT_FOUND;
