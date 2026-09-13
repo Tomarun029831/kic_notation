@@ -25,7 +25,7 @@ void setup() {
     Serial.print("x");
     Serial.println(size.height_cm);
 
-    KIC_SchedulePtr schedule = find_kic_schedule(data, 1);
+    KIC_SchedulePtr schedule = find_kic_schedule(data, '1');
     if (schedule != KIC_SCHEDULE_NOT_FOUND) {
       // Get first time of events
       KIC_Timestamp event = find_kic_time_in_schedule(schedule, 0);

@@ -123,7 +123,7 @@ if (check_kic_syntax(data) == KIC_SYNTAX_CORRECT) {
     KIC_Timestamp ts = get_kic_timestamp(data);
 
     // 3. Find specific schedule for Day 1
-    const char* schedule = find_kic_schedule(data, 1);
+    const char* schedule = find_kic_schedule(data, '1');
     if (schedule != KIC_SCHEDULE_NOT_FOUND) {
         KIC_Timestamp event = find_kic_time_in_schedule(schedule, 0);
     }

@@ -121,7 +121,7 @@ static inline void kic_find_schedules_test() {
   const char *expected_ptr[] = {KIC_SCHEDULE_NOT_FOUND,
                                 &kic_correct_syntax[1][22],
                                 &kic_correct_syntax[2][38]};
-  const uint32_t args[] = {0, 0, 2};
+  const uint32_t args[] = {'0','0','2'};
 
   for (const char *const *head = kic_correct_syntax;
        head != kic_correct_syntax + ARRAY_SIZE(kic_correct_syntax); head++) {
@@ -139,7 +139,7 @@ static inline void kic_find_time_in_schedule_test() {
       "390001200;41200;51200;61200;/"};
   const KIC_Timestamp expected_timestamps[] = {
       TIMESTAMP(1, 1154), KIC_TIME_NOT_FOUND, TIMESTAMP(2, 1100)};
-  const uint32_t args_to_find_schedule[] = {1, 0, 2};
+  const uint32_t args_to_find_schedule[] = {'1','0','2'};
   const size_t args_to_get_time[] = {0, 3, 2};
 
   for (const char *const *head = kic_correct_syntax;
@@ -158,7 +158,7 @@ TEST_MAIN {
   kic_get_timestamp_test();
   kic_get_boardsize_test();
   kic_find_schedules_test();
-  kic_find_time_in_schedule_test();
+  kic_find_time_in_schedule_test(); // BUG:
 
 #ifndef ARDUINO
   puts("flyweight_kic_parser_test passed");
